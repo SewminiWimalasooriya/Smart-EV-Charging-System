@@ -1,10 +1,17 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const ProtectedRoute = () => {
-    const token = useSelector((state) => state.stationAuth.token);
+const ProtectedRoute = ({allowedRoles}) => {
+    const {token,role} = useSelector((state) => state.stationAuth);
 
-    return token ? <Outlet /> : <Navigate to="/" replace />;
+    if (!token){
+         return <Navigate to="/" replace />;
+    }
+
+    if (!allowedRoles.includes(role)) {
+        return <Navigate to="/unauthorized" replace />;
+    }
+    return <Outlet />;
 };
 
 export default ProtectedRoute;

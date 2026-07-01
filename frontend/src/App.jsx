@@ -4,7 +4,7 @@ import AllStations from "./pages/home/AllStations";
 import AdminRoutes from "./routes/AdminRoutes";
 import StationAuthRoutes from "./routes/StationAuthRoutes";
 import StationMap from "./pages/home/StationMap";
-import DashboardRoutes from "./routes/DashboardRoutes";
+import OwnerDashboardRoutes from "./routes/OwnerDashboardRoutes";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
@@ -16,9 +16,8 @@ function App() {
         <Route path="/stations-map" element={<StationMap />}/>
         <Route path="/admin/*" element={<AdminRoutes />}/>
         <Route path="/auth/*" element={<StationAuthRoutes />}/>
-        <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard/*" element={<DashboardRoutes />}/>
-        </Route>
+        <Route path="/dashboard/*" element={<OwnerDashboardRoutes />}/>
+        
 
       </Routes>
 
