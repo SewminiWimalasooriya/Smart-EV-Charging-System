@@ -7,6 +7,7 @@ import User from "./models/User.js";
 import authRoutes from "./routes/authRoutes.js";
 import apartmentRequestRoutes from "./routes/apartmentRequestRoutes.js";
 import adminAuthRoutes from './routes/adminAuthRoutes.js';
+import slotRoutes from './routes/slotRoutes.js';
 
 dotenv.config();
 
@@ -29,6 +30,9 @@ app.use("/uploads", express.static("uploads"));
 //routes
 app.use('/api/auth',authRoutes);
 app.use('/api/apartment', apartmentRequestRoutes);
+
+//slote manage
+app.use('/api/slot', slotRoutes);
 
 //admin routes
 app.use('/api/auth/admin',adminAuthRoutes);

@@ -12,7 +12,7 @@ const Sidebar = ()=>{
     const navigate = useNavigate();
 
     const menuItems = [
-        { name: "Dashboard", path: `/dashboard/owner/${stationId}` },
+        { name: "Overview", path: `/dashboard/owner/${stationId}` },
         { name: "Add New Owner", path: `/dashboard/owner/${stationId}/add-owner` },
         { name: "Slots Management", path: `/dashboard/owner/${stationId}/slots-management` },
         { name: "Booking", path: `/dashboard/owner/${stationId}/booking` }
@@ -34,11 +34,11 @@ const Sidebar = ()=>{
                     <NavLink
                        to={item.path}
                        key={item.name}
-                       end={item.name === "Dashboard"}
+                       end={item.name === "Overview"}
                         className={({ isActive }) =>
                             `block px-4 py-3 rounded-xl transition ${
                                 isActive
-                                    ? "bg-blue-500 text-black"
+                                    ? "bg-blue-400 text-black"
                                     : "bg-gray-800 hover:bg-gray-700"
                             }`
                         }
