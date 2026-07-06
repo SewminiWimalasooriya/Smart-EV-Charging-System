@@ -8,6 +8,8 @@ import authRoutes from "./routes/authRoutes.js";
 import apartmentRequestRoutes from "./routes/apartmentRequestRoutes.js";
 import adminAuthRoutes from './routes/adminAuthRoutes.js';
 import slotRoutes from './routes/slotRoutes.js';
+import bookingRoutes from './routes/bookingRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
 
 dotenv.config();
 
@@ -33,6 +35,8 @@ app.use('/api/apartment', apartmentRequestRoutes);
 
 //slote manage
 app.use('/api/slot', slotRoutes);
+app.use('/api/user',bookingRoutes);
+app.use('/api/notification',notificationRoutes);
 
 //admin routes
 app.use('/api/auth/admin',adminAuthRoutes);

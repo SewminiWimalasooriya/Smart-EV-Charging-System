@@ -11,6 +11,10 @@ const slotSchema = new mongoose.Schema(
         type:String,
         required:true,
     },
+    slotVoltage:{
+      type:String,
+      required:true,
+    },
 
     date: {
       type: String,
@@ -28,14 +32,11 @@ const slotSchema = new mongoose.Schema(
     },
     status: {
         type: String,
-        enum: ["available", "maintenance", "unavailable"],
+        enum: ["booked", "maintenance", "available"],
         default: "available"
     },
 
-    isBooked: {
-      type: Boolean,
-      default: false,
-    },
+    
   },
   {
     timestamps: true,

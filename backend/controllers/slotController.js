@@ -1,12 +1,14 @@
 import Slot from "../models/Slot.js";
 import Apartment from "../models/Apartment.js";
+import Booking from "../models/Booking.js";
+import Notification from "../models/Notification.js";
 
 export const createSlot = async (req, res) => {
     try {
-        const { slotName, date, startTime, endTime, status } = req.body;
+        const { slotName, date, startTime, endTime, status,slotVoltage } = req.body;
 
         //validation
-        if (!slotName || !date || !startTime || !endTime || !status) {
+        if (!slotName || !date || !startTime || !endTime || !status || !slotVoltage) {
             return res.status(400).json({ message: "All fields are required" });
         }
 
@@ -25,7 +27,8 @@ export const createSlot = async (req, res) => {
             startTime,
             endTime,
             status,
-            slotName
+            slotName,
+            slotVoltage
         });
 
         if (existingSlot) {
@@ -41,6 +44,7 @@ export const createSlot = async (req, res) => {
             startTime,
             endTime,
             status,
+            slotVoltage
         });
         res.status(201).json({
             success: true,
@@ -119,7 +123,8 @@ export const updateSlot = async (req, res) => {
             startTime,
             endTime,
             status,
-            isBooked,
+            slotVoltage
+            
         } = req.body;
 
         slot.slotName = slotName || slot.slotName;
@@ -127,10 +132,7 @@ export const updateSlot = async (req, res) => {
         slot.startTime = startTime || slot.startTime;
         slot.endTime = endTime || slot.endTime;
         slot.status = status || slot.status;
-
-        if (typeof isBooked === "boolean") {
-            slot.isBooked = isBooked;
-        }
+        slot.slotVoltage = slotVoltage || slot.slotVoltage;
 
         await slot.save();
 
@@ -167,7 +169,7 @@ export const deleteSlot = async (req,res) =>{
       });
     }
 
-     if (slot.isBooked) {
+     if (slot.status === "booked") {
       return res.status(400).json({
         success: false,
         message: "Booked slot cannot be deleted",
@@ -189,3 +191,97 @@ export const deleteSlot = async (req,res) =>{
     });
   }
 }
+
+//get booking slots by users for station
+export const getBookedSlotsWithUsers = async (req, res) => {
+  try {
+    const stationId = req.user.apartment;
+
+    const bookings = await Booking.find({
+      station: stationId,
+      status: "confirmed",
+    })
+      .populate("slot")
+      .populate("user", "username email")
+      .sort({ createdAt: -1 });
+
+      if(!bookings || bookings.length === 0 ){
+        return res.status(404).json({
+            success: false,
+            message:"No bookings found for this station yet"
+        })
+      }
+
+    res.status(200).json({
+      success: true,
+      count: bookings.length,
+      bookings,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+//booking cancle by owner 
+export const ownerCancelBooking = async (req, res) => {
+  try {
+    
+    const booking = await Booking.findById(req.params.bookingId);
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found",
+      });
+    }
+
+    // booking belongs to owner's station
+    if (booking.station.toString() !== req.user.apartment.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "You cannot cancel this booking",
+      });
+    }
+
+    if (booking.status === "cancelled") {
+      return res.status(400).json({
+        success: false,
+        message: "Booking already cancelled",
+      });
+    }
+
+    // cancel booking
+    booking.status = "cancelled";
+    await booking.save();
+
+    // free slot
+    const slot = await Slot.findById(booking.slot);
+
+    if (slot) {
+      slot.status = "available";
+      await slot.save();
+    }
+
+    // notify user
+    await Notification.create({
+      user: booking.user,
+      title: "Booking Cancelled by Station",
+      message: `Your booking for ${slot.slotName} has been cancelled by the station owner.`,
+      type: "owner_cancel",
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Booking cancelled successfully",
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
