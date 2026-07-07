@@ -2,6 +2,7 @@ import Navbar from "../../components/Navbar";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../../api"
 
 import spark from '../../assets/Sparkles Animation.json'
 
@@ -15,11 +16,8 @@ const AllStations = () => {
     useEffect(() => {
         const fetchStations = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/apartment/");
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.message || "Failed to fetch stations");
-                }
+                const response = await API.get("/apartment/");
+                const data = response.data;
                 setStations(data);
                 setLoading(false);
             } catch (error) {

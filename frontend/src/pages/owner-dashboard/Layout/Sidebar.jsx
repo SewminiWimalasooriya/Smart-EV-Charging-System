@@ -1,60 +1,203 @@
-import { NavLink } from "react-router-dom";
-import {useSelector} from "react-redux";
-import { FiLogOut } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import {
+    FiHome,
+    FiGrid,
+    FiCalendar,
+    FiLogOut,
+    FiZap
+} from "react-icons/fi";
+
+import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { stationLogout } from "../../auth/StationAUthSlice";
 
-const Sidebar = ()=>{
-    const { apartment } = useSelector((state) => state.stationAuth);
-    const stationId = apartment?._id; // 
+const Sidebar = () => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const menuItems = [
-        { name: "Dashboard", path: `/dashboard/owner/${stationId}` },
-        { name: "Add New Owner", path: `/dashboard/owner/${stationId}/add-owner` },
-        { name: "Slots Management", path: `/dashboard/owner/${stationId}/slots-management` },
-        { name: "Booking", path: `/dashboard/owner/${stationId}/booking` }
+    const { apartment } = useSelector(
+        state => state.stationAuth
+    );
+
+    const stationId = apartment?._id;
+
+
+    const menus = [
+        {
+            title: "Overview",
+            icon: <FiHome size={20} />,
+            path: `/dashboard/owner/${stationId}`
+        },
+        {
+            title: "Slot Management",
+            icon: <FiGrid size={20} />,
+            path: `/dashboard/owner/${stationId}/slots-management`
+        },
+        {
+            title: "Bookings",
+            icon: <FiCalendar size={20} />,
+            path: `/dashboard/owner/${stationId}/booking`
+        }
     ];
 
-    const handleLogout = ()=>{
+
+    const logout = () => {
+
         dispatch(stationLogout());
-        localStorage.removeItem("token"); // if you use token
-        navigate(`/`,{ replace: true }); // redirect to login
 
-    }
+        localStorage.removeItem("token");
 
-    return(
-        <div className="w-64 bg-gray-900/60 border-r border-gray-800 p-5 flex flex-col h-screen">
-            <h1 className="text-2xl font-bold mb-10">⚡VoltSpot</h1>
+        navigate("/");
 
-            <div className="space-y-3 flex-1">
-                {menuItems.map((item)=>(
-                    <NavLink
-                       to={item.path}
-                       key={item.name}
-                       end={item.name === "Dashboard"}
-                        className={({ isActive }) =>
-                            `block px-4 py-3 rounded-xl transition ${
-                                isActive
-                                    ? "bg-blue-500 text-black"
-                                    : "bg-gray-800 hover:bg-gray-700"
-                            }`
-                        }
-                            >{item.name}</NavLink>
-                ))}
+    };
+
+
+
+    return (
+
+        <aside className=" w-72 min-h-screen bg-[#07111F] border-r border-white/10 flex flex-col">
+
+
+            <div className=" p-6 border-b border-white/10 bg-[#0F1B2D]/60 backdrop-blur-xl">
+
+
+                <div className="flex items-center gap-3">
+
+
+                    <div className=" w-12 h-12 rounded-xl bg-cyan-400/20 flex items-center justify-center text-cyan-400 text-2xl shadow-[0_0_20px_rgba(0,212,255,0.25)]">
+
+                        <FiZap />
+
+                    </div>
+
+
+                    <div>
+
+                        <h1 className=" text-2xl font-bold text-white ">
+
+                            Volt<span className="text-cyan-400">Spot</span>
+
+                        </h1>
+
+
+                        <p className=" text-slate-400 text-xs mt-1">
+
+                            EV Station Dashboard
+
+                        </p>
+
+
+                    </div>
+
+
+                </div>
+
 
             </div>
-             <div className="border-t border-gray-700 my-3"></div>
-           <button className="flex items-center gap-3 px-4 py-3 mt-5 rounded-xl bg-gray-900 hover:bg-blue-700 transition text-white"
-           onClick={handleLogout}>
-            <FiLogOut size={18} />
-            Logout
-           </button>
 
-        </div>
+
+
+            <div className="flex-1 p-5">
+
+
+                <p className="text-xs uppercase tracking-wider text-slate-500 mb-4 ">
+
+                    Navigation
+
+                </p>
+
+
+
+                {
+                    menus.map(menu => (
+
+
+                        <NavLink
+
+                            key={menu.title}
+
+                            to={menu.path}
+
+                            end={menu.title === "Overview"}
+
+                            className={({ isActive }) =>
+
+                                `flex items-center gap-4 px-5 py-4 rounded-xl mb-3 transition-all duration-300
+
+                                ${isActive
+
+                                    ?
+
+                                    "bg-cyan-400/20 text-cyan-300 border border-cyan-400/30 shadow-[0_0_20px_rgba(0,212,255,0.15)]"
+
+                                    :
+
+                                    "text-slate-300 hover:bg-white/5 hover:text-cyan-300"
+
+                                }
+`
+
+                            }
+
+                        >
+
+
+                            <div className="text-lg">
+
+                                {menu.icon}
+
+                            </div>
+
+
+                            <span className="font-medium">
+
+                                {menu.title}
+
+                            </span>
+
+
+                        </NavLink>
+
+
+                    ))
+
+                }
+
+
+            </div>
+
+
+
+
+            <div className="p-5 border-t border-white/10">
+
+
+                <button
+
+                    onClick={logout}
+
+                    className="flex items-center gap-3 w-full px-5 py-4 rounded-xl bg-red-500/10 border border-red-400/20 text-red-400 hover:bg-red-500/20 transition-all duration-300">
+
+
+                    <FiLogOut />
+
+                    <span>
+                        Logout
+                    </span>
+
+
+                </button>
+
+
+            </div>
+
+
+        </aside>
+
+
     )
+
 }
+
 
 export default Sidebar;

@@ -8,6 +8,7 @@ import {
     stationLoginFailure
 } from "./StationAUthSlice"
 import { useLocation } from "react-router-dom";
+import API from "../../api";
 
 
 const StationAuth = () => {
@@ -45,8 +46,8 @@ const StationAuth = () => {
 
         try {
 
-            const res = await axios.post(
-                "http://localhost:5000/api/auth/register",
+            const res = await API.post(
+                "/auth/register",
                 {
                     username: formData.userName,
                     email: formData.email,
@@ -87,32 +88,76 @@ const StationAuth = () => {
 
     //login handler
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            dispatch(stationLoginStart());
-            const res = await axios.post(
-                "http://localhost:5000/api/auth/login",
-                { email, password, apartment: id, }
-            )
-            dispatch(stationLoginSuccess(res.data));
 
+        e.preventDefault();
+
+        try {
+
+            dispatch(stationLoginStart());
+
+
+            const res = await API.post(
+                "/auth/login",
+                {
+                    email,
+                    password,
+                    apartment: id
+                }
+            );
+
+
+            dispatch(
+                stationLoginSuccess(res.data)
+            );
+
+
+            // save token
+            localStorage.setItem(
+                "token",
+                res.data.token
+            );
+
+
+            // save user data
             localStorage.setItem(
                 "stationAuth",
                 JSON.stringify(res.data)
             );
 
+
+
             if (res.data.user.role === "owner") {
-                navigate(`/dashboard/owner/${id}`);
+
+                navigate(
+                    `/dashboard/owner/${id}`
+                );
+
             } else {
-                navigate(`/dashboard/user/${id}`)
+
+                navigate(
+                    `/dashboard/user/${id}`
+                );
+
             }
 
+
         } catch (error) {
-            dispatch(stationLoginFailure(error.response?.data?.message || "Login failed"));
-            alert(error.response?.data?.message || "Login failed");
+
+            dispatch(
+                stationLoginFailure(
+                    error.response?.data?.message ||
+                    "Login failed"
+                )
+            );
+
+            alert(
+                error.response?.data?.message ||
+                "Login failed"
+            );
+
         }
 
-    }
+    };
     //close login model
     const handleCloseModal = () => {
         navigate(`/view-stations`);

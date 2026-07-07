@@ -1,41 +1,55 @@
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
-const DashboardNavbar = () => {
+// const DashboardNavbar = () => {
 
-    const { user,role,apartment } = useSelector(
-        (state) => state.stationAuth
-    );
-    
+//     const { user, apartment } = useSelector(
+//         state => state.stationAuth
+//     );
 
-    return (
-        <div className="h-12 border-b border-gray-800 bg-gray-900 flex items-center justify-between px-6">
+//     return (
 
-            <h2 className="text-lg font-semibold">
-                Welcome To VoltSpot {role}'s Dashboard
-            </h2>
+//         <header className="h-20 bg-slate-900 border-b border-slate-800 px-8 flex items-center justify-between">
 
-            <div className="flex items-center gap-3">
+//             <div>
 
-                <img
-                    src="https://i.pravatar.cc/40"
-                    alt=""
-                    className="w-8 h-8 rounded-full"
-                />
+//                 <h2 className="text-2xl font-bold">
 
-                <div>
-                    <p className="text-sm font-semibold">
-                        {user?.username}
-                    </p>
+//                     Welcome,
 
-                    <p className="text-sm text-gray-400">
-                        {apartment?.name}
-                    </p>
-                </div>
+//                     <span className="text-blue-500">
 
-            </div>
+//                         {" "} {user?.username}
 
-        </div>
-    );
-};
+//                     </span>
 
-export default DashboardNavbar;
+//                 </h2>
+
+//                 <p className="text-slate-400">
+
+//                     {apartment?.name}
+
+//                 </p>
+
+//             </div>
+
+//             <div className="flex items-center gap-4">
+
+//                 <img
+
+//                     src="https://i.pravatar.cc/150?img=8"
+
+//                     alt=""
+
+//                     className="w-12 h-12 rounded-full border-2 border-blue-500"
+
+//                 />
+
+//             </div>
+
+//         </header>
+
+//     );
+
+// };
+
+// export default DashboardNavbar;

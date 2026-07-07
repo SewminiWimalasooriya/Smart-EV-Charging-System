@@ -2,6 +2,7 @@ import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API from "../../api";
 
 const StationsMap = () => {
     const [stations, setStations] = useState([]);
@@ -9,7 +10,7 @@ const StationsMap = () => {
 
     useEffect(() => {
         const fetchStations = async () => {
-            const res = await axios.get("http://localhost:5000/api/apartment/");
+            const res = await API.get("/apartment/");
             setStations(res.data);
         };
 

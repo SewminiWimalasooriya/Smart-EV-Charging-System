@@ -1,26 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-// const tokenFromStorage = localStorage.getItem("token");
+
+// Get auth data from localStorage
 const storedData = localStorage.getItem("stationAuth");
+const authData = storedData ? JSON.parse(storedData) : null;
 
 const initialState = {
     loading: false,
     error: false,
     errorMessage: "",
-    user: storedData
-        ? JSON.parse(storedData).user
-        : null,
 
-    token: storedData
-        ? JSON.parse(storedData).token
-        : null,
-    role: storedData
-        ? JSON.parse(storedData).user.role
-        : null,
-    apartment: storedData
-        ? JSON.parse(storedData).user.apartment
-        : null,
-    isAuthenticated: false,
-    mustChangePassword: false,
+    user: authData?.user || null,
+    token: authData?.token || null,
+    role: authData?.user?.role || null,
+    apartment: authData?.user?.apartment || null,
+
+    isAuthenticated: !!authData,
+    mustChangePassword: authData?.mustChangePassword || false,
 };
 
 const stationAuthSlice = createSlice({
@@ -28,7 +23,6 @@ const stationAuthSlice = createSlice({
     initialState,
 
     reducers: {
-
         // LOGIN START
         stationLoginStart: (state) => {
             state.loading = true;
@@ -38,25 +32,25 @@ const stationAuthSlice = createSlice({
 
         // LOGIN SUCCESS
         stationLoginSuccess: (state, action) => {
-            state.loading = false;
-
-            // full user object
             state.user = action.payload.user;
-
-            // token
             state.token = action.payload.token;
-
-            // role
             state.role = action.payload.user.role;
-
-            // apartment details
             state.apartment = action.payload.user.apartment;
-
-            // password change flag
             state.mustChangePassword =
-                action.payload.mustChangePassword;
+                action.payload.mustChangePassword || false;
 
             state.isAuthenticated = true;
+
+            // Save to localStorage
+            localStorage.setItem(
+                "stationAuth",
+                JSON.stringify({
+                    user: action.payload.user,
+                    token: action.payload.token,
+                    mustChangePassword:
+                        action.payload.mustChangePassword || false,
+                })
+            );
         },
 
         // LOGIN FAILURE
@@ -68,7 +62,6 @@ const stationAuthSlice = createSlice({
 
         // LOGOUT
         stationLogout: (state) => {
-            localStorage.removeItem("token"); // ✅ important
             state.loading = false;
             state.error = false;
             state.errorMessage = "";
@@ -77,9 +70,10 @@ const stationAuthSlice = createSlice({
             state.token = null;
             state.role = null;
             state.apartment = null;
-
             state.mustChangePassword = false;
             state.isAuthenticated = false;
+
+            // Remove localStorage
             localStorage.removeItem("stationAuth");
         },
     },

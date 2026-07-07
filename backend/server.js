@@ -7,6 +7,10 @@ import User from "./models/User.js";
 import authRoutes from "./routes/authRoutes.js";
 import apartmentRequestRoutes from "./routes/apartmentRequestRoutes.js";
 import adminAuthRoutes from './routes/adminAuthRoutes.js';
+import slotRoutes from './routes/slotRoutes.js';
+import bookingRoutes from './routes/bookingRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
+import ownerDashboardRoutes from './routes/ownerDashboardRoutes.js';
 
 dotenv.config();
 
@@ -30,9 +34,16 @@ app.use("/uploads", express.static("uploads"));
 app.use('/api/auth',authRoutes);
 app.use('/api/apartment', apartmentRequestRoutes);
 
+//slote manage
+app.use('/api/slot', slotRoutes);
+app.use('/api/user',bookingRoutes);
+app.use('/api/notification',notificationRoutes);
+
 //admin routes
 app.use('/api/auth/admin',adminAuthRoutes);
 
+//owner dashboard routes
+app.use("/api/owner/dashboard", ownerDashboardRoutes);
 
 // start server
 const PORT = process.env.PORT || 5000;
