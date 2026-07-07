@@ -1,22 +1,22 @@
 import Sidebar from "./Sidebar";
-import DashboardNavbar from "./DashboardNavbar";
+// import DashboardNavbar from "./DashboardNavbar";
 import { Outlet } from "react-router-dom";
 
 const DashboardLayout = () => {
     return (
-        <div className="flex min-h-screen bg-black text-white">
+        <div className="flex h-screen bg-slate-950 text-white">
 
             
             <Sidebar />
 
             {/* Right Side */}
-            <div className="flex-1 flex flex-col">
+            <div className="flex flex-col flex-1 overflow-hidden">
 
                 
-                <DashboardNavbar />
+                {/* <DashboardNavbar /> */}
 
                 {/* Pages */}
-                <main className="flex-1 overflow-y-auto p-6">
+                <main className="flex-1 overflow-y-auto bg-slate-900 p-8">
                     <Outlet />
                 </main>
 

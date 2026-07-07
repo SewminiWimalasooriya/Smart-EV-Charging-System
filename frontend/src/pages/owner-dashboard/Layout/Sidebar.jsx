@@ -1,60 +1,124 @@
-import { NavLink } from "react-router-dom";
-import {useSelector} from "react-redux";
-import { FiLogOut } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import {
+    FiHome,
+    FiGrid,
+    FiCalendar,
+    FiLogOut
+} from "react-icons/fi";
+
+import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { stationLogout } from "../../auth/StationAUthSlice";
 
-const Sidebar = ()=>{
-    const { apartment } = useSelector((state) => state.stationAuth);
-    const stationId = apartment?._id; // 
+const Sidebar = () => {
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const menuItems = [
-        { name: "Overview", path: `/dashboard/owner/${stationId}` },
-        { name: "Add New Owner", path: `/dashboard/owner/${stationId}/add-owner` },
-        { name: "Slots Management", path: `/dashboard/owner/${stationId}/slots-management` },
-        { name: "Booking", path: `/dashboard/owner/${stationId}/booking` }
+    const { apartment } = useSelector(state => state.stationAuth);
+
+    const stationId = apartment?._id;
+
+    const menus = [
+        {
+            title: "Overview",
+            icon: <FiHome size={20}/>,
+            path: `/dashboard/owner/${stationId}`
+        },
+        {
+            title: "Slot Management",
+            icon: <FiGrid size={20}/>,
+            path: `/dashboard/owner/${stationId}/slots-management`
+        },
+        {
+            title: "Bookings",
+            icon: <FiCalendar size={20}/>,
+            path: `/dashboard/owner/${stationId}/booking`
+        }
     ];
 
-    const handleLogout = ()=>{
+    const logout = () => {
         dispatch(stationLogout());
-        localStorage.removeItem("token"); // if you use token
-        navigate(`/`,{ replace: true }); // redirect to login
+        localStorage.removeItem("token");
+        navigate("/");
+    };
 
-    }
+    return (
 
-    return(
-        <div className="w-64 bg-gray-900/60 border-r border-gray-800 p-5 flex flex-col h-screen">
-            <h1 className="text-2xl font-bold mb-10">⚡VoltSpot</h1>
+        <aside className="w-72 bg-slate-900 border-r border-slate-800 flex flex-col">
 
-            <div className="space-y-3 flex-1">
-                {menuItems.map((item)=>(
+            <div className="p-6 border-b border-slate-800">
+
+                <h1 className="text-3xl font-bold text-blue-500">
+                    ⚡ VoltSpot
+                </h1>
+
+                <p className="text-slate-400 text-sm mt-2">
+                    EV Station Dashboard
+                </p>
+
+            </div>
+
+            <div className="flex-1 p-5">
+
+                {menus.map(menu => (
+
                     <NavLink
-                       to={item.path}
-                       key={item.name}
-                       end={item.name === "Overview"}
-                        className={({ isActive }) =>
-                            `block px-4 py-3 rounded-xl transition ${
+
+                        key={menu.title}
+
+                        to={menu.path}
+
+                        end={menu.title === "Overview"}
+
+                        className={({isActive}) =>
+
+                            `flex items-center gap-4 px-5 py-4 rounded-xl mb-3 transition-all
+
+                            ${
                                 isActive
-                                    ? "bg-blue-400 text-black"
-                                    : "bg-gray-800 hover:bg-gray-700"
+
+                                ? "bg-blue-600 text-white shadow-lg"
+
+                                : "hover:bg-slate-800 text-slate-300"
+
                             }`
+
                         }
-                            >{item.name}</NavLink>
+
+                    >
+
+                        {menu.icon}
+
+                        {menu.title}
+
+                    </NavLink>
+
                 ))}
 
             </div>
-             <div className="border-t border-gray-700 my-3"></div>
-           <button className="flex items-center gap-3 px-4 py-3 mt-5 rounded-xl bg-gray-900 hover:bg-blue-700 transition text-white"
-           onClick={handleLogout}>
-            <FiLogOut size={18} />
-            Logout
-           </button>
 
-        </div>
-    )
-}
+            <div className="p-5 border-t border-slate-800">
+
+                <button
+
+                    onClick={logout}
+
+                    className="flex items-center gap-3 w-full px-5 py-4 rounded-xl bg-red-600 hover:bg-red-700 transition"
+
+                >
+
+                    <FiLogOut/>
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </aside>
+
+    );
+
+};
 
 export default Sidebar;

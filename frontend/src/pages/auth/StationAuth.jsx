@@ -88,32 +88,76 @@ const StationAuth = () => {
 
     //login handler
     const handleSubmit = async (e) => {
+
         e.preventDefault();
+
         try {
+
             dispatch(stationLoginStart());
+
+
             const res = await API.post(
                 "/auth/login",
-                { email, password, apartment: id, }
-            )
-            dispatch(stationLoginSuccess(res.data));
+                {
+                    email,
+                    password,
+                    apartment: id
+                }
+            );
 
+
+            dispatch(
+                stationLoginSuccess(res.data)
+            );
+
+
+            // save token
+            localStorage.setItem(
+                "token",
+                res.data.token
+            );
+
+
+            // save user data
             localStorage.setItem(
                 "stationAuth",
                 JSON.stringify(res.data)
             );
 
+
+
             if (res.data.user.role === "owner") {
-                navigate(`/dashboard/owner/${id}`);
+
+                navigate(
+                    `/dashboard/owner/${id}`
+                );
+
             } else {
-                navigate(`/dashboard/user/${id}`)
+
+                navigate(
+                    `/dashboard/user/${id}`
+                );
+
             }
 
+
         } catch (error) {
-            dispatch(stationLoginFailure(error.response?.data?.message || "Login failed"));
-            alert(error.response?.data?.message || "Login failed");
+
+            dispatch(
+                stationLoginFailure(
+                    error.response?.data?.message ||
+                    "Login failed"
+                )
+            );
+
+            alert(
+                error.response?.data?.message ||
+                "Login failed"
+            );
+
         }
 
-    }
+    };
     //close login model
     const handleCloseModal = () => {
         navigate(`/view-stations`);
