@@ -11,6 +11,7 @@ import slotRoutes from './routes/slotRoutes.js';
 import bookingRoutes from './routes/bookingRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
 import ownerDashboardRoutes from './routes/ownerDashboardRoutes.js';
+import userDashboardRoutes from './routes/userDashboardRoutes.js';
 
 dotenv.config();
 
@@ -44,6 +45,9 @@ app.use('/api/auth/admin',adminAuthRoutes);
 
 //owner dashboard routes
 app.use("/api/owner/dashboard", ownerDashboardRoutes);
+
+//user dashboard routes
+app.use("/api/user/dashboard", userDashboardRoutes);
 
 // start server
 const PORT = process.env.PORT || 5000;

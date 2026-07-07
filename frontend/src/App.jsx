@@ -6,6 +6,7 @@ import StationAuthRoutes from "./routes/StationAuthRoutes";
 import StationMap from "./pages/home/StationMap";
 import OwnerDashboardRoutes from "./routes/OwnerDashboardRoutes";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import UserRoutes from "./routes/UserRoutes";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/admin/*" element={<AdminRoutes />}/>
         <Route path="/auth/*" element={<StationAuthRoutes />}/>
         <Route path="/dashboard/*" element={<OwnerDashboardRoutes />}/>
+        <Route path="/user-dashboard/*" element={<UserRoutes/>}/>
         
 
       </Routes>

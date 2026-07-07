@@ -135,7 +135,7 @@ const StationAuth = () => {
             } else {
 
                 navigate(
-                    `/dashboard/user/${id}`
+                    `/user-dashboard/user/${id}`
                 );
 
             }
