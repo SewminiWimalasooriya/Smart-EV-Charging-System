@@ -1,55 +1,55 @@
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
-const DashboardNavbar = () => {
+// const DashboardNavbar = () => {
 
-    const { user, apartment } = useSelector(
-        state => state.stationAuth
-    );
+//     const { user, apartment } = useSelector(
+//         state => state.stationAuth
+//     );
 
-    return (
+//     return (
 
-        <header className="h-20 bg-slate-900 border-b border-slate-800 px-8 flex items-center justify-between">
+//         <header className="h-20 bg-slate-900 border-b border-slate-800 px-8 flex items-center justify-between">
 
-            <div>
+//             <div>
 
-                <h2 className="text-2xl font-bold">
+//                 <h2 className="text-2xl font-bold">
 
-                    Welcome,
+//                     Welcome,
 
-                    <span className="text-blue-500">
+//                     <span className="text-blue-500">
 
-                        {" "} {user?.username}
+//                         {" "} {user?.username}
 
-                    </span>
+//                     </span>
 
-                </h2>
+//                 </h2>
 
-                <p className="text-slate-400">
+//                 <p className="text-slate-400">
 
-                    {apartment?.name}
+//                     {apartment?.name}
 
-                </p>
+//                 </p>
 
-            </div>
+//             </div>
 
-            <div className="flex items-center gap-4">
+//             <div className="flex items-center gap-4">
 
-                <img
+//                 <img
 
-                    src="https://i.pravatar.cc/150?img=8"
+//                     src="https://i.pravatar.cc/150?img=8"
 
-                    alt=""
+//                     alt=""
 
-                    className="w-12 h-12 rounded-full border-2 border-blue-500"
+//                     className="w-12 h-12 rounded-full border-2 border-blue-500"
 
-                />
+//                 />
 
-            </div>
+//             </div>
 
-        </header>
+//         </header>
 
-    );
+//     );
 
-};
+// };
 
-export default DashboardNavbar;
+// export default DashboardNavbar;

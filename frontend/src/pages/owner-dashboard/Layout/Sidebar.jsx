@@ -2,7 +2,8 @@ import {
     FiHome,
     FiGrid,
     FiCalendar,
-    FiLogOut
+    FiLogOut,
+    FiZap
 } from "react-icons/fi";
 
 import { NavLink, useNavigate } from "react-router-dom";
@@ -14,111 +15,189 @@ const Sidebar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { apartment } = useSelector(state => state.stationAuth);
+    const { apartment } = useSelector(
+        state => state.stationAuth
+    );
 
     const stationId = apartment?._id;
+
 
     const menus = [
         {
             title: "Overview",
-            icon: <FiHome size={20}/>,
+            icon: <FiHome size={20} />,
             path: `/dashboard/owner/${stationId}`
         },
         {
             title: "Slot Management",
-            icon: <FiGrid size={20}/>,
+            icon: <FiGrid size={20} />,
             path: `/dashboard/owner/${stationId}/slots-management`
         },
         {
             title: "Bookings",
-            icon: <FiCalendar size={20}/>,
+            icon: <FiCalendar size={20} />,
             path: `/dashboard/owner/${stationId}/booking`
         }
     ];
 
+
     const logout = () => {
+
         dispatch(stationLogout());
+
         localStorage.removeItem("token");
+
         navigate("/");
+
     };
+
+
 
     return (
 
-        <aside className="w-72 bg-slate-900 border-r border-slate-800 flex flex-col">
+        <aside className=" w-72 min-h-screen bg-[#07111F] border-r border-white/10 flex flex-col">
 
-            <div className="p-6 border-b border-slate-800">
 
-                <h1 className="text-3xl font-bold text-blue-500">
-                    ⚡ VoltSpot
-                </h1>
+            <div className=" p-6 border-b border-white/10 bg-[#0F1B2D]/60 backdrop-blur-xl">
 
-                <p className="text-slate-400 text-sm mt-2">
-                    EV Station Dashboard
-                </p>
+
+                <div className="flex items-center gap-3">
+
+
+                    <div className=" w-12 h-12 rounded-xl bg-cyan-400/20 flex items-center justify-center text-cyan-400 text-2xl shadow-[0_0_20px_rgba(0,212,255,0.25)]">
+
+                        <FiZap />
+
+                    </div>
+
+
+                    <div>
+
+                        <h1 className=" text-2xl font-bold text-white ">
+
+                            Volt<span className="text-cyan-400">Spot</span>
+
+                        </h1>
+
+
+                        <p className=" text-slate-400 text-xs mt-1">
+
+                            EV Station Dashboard
+
+                        </p>
+
+
+                    </div>
+
+
+                </div>
+
 
             </div>
+
+
 
             <div className="flex-1 p-5">
 
-                {menus.map(menu => (
 
-                    <NavLink
+                <p className="text-xs uppercase tracking-wider text-slate-500 mb-4 ">
 
-                        key={menu.title}
+                    Navigation
 
-                        to={menu.path}
+                </p>
 
-                        end={menu.title === "Overview"}
 
-                        className={({isActive}) =>
 
-                            `flex items-center gap-4 px-5 py-4 rounded-xl mb-3 transition-all
+                {
+                    menus.map(menu => (
 
-                            ${
-                                isActive
 
-                                ? "bg-blue-600 text-white shadow-lg"
+                        <NavLink
 
-                                : "hover:bg-slate-800 text-slate-300"
+                            key={menu.title}
 
-                            }`
+                            to={menu.path}
 
-                        }
+                            end={menu.title === "Overview"}
 
-                    >
+                            className={({ isActive }) =>
 
-                        {menu.icon}
+                                `flex items-center gap-4 px-5 py-4 rounded-xl mb-3 transition-all duration-300
 
-                        {menu.title}
+                                ${isActive
 
-                    </NavLink>
+                                    ?
 
-                ))}
+                                    "bg-cyan-400/20 text-cyan-300 border border-cyan-400/30 shadow-[0_0_20px_rgba(0,212,255,0.15)]"
+
+                                    :
+
+                                    "text-slate-300 hover:bg-white/5 hover:text-cyan-300"
+
+                                }
+`
+
+                            }
+
+                        >
+
+
+                            <div className="text-lg">
+
+                                {menu.icon}
+
+                            </div>
+
+
+                            <span className="font-medium">
+
+                                {menu.title}
+
+                            </span>
+
+
+                        </NavLink>
+
+
+                    ))
+
+                }
+
 
             </div>
 
-            <div className="p-5 border-t border-slate-800">
+
+
+
+            <div className="p-5 border-t border-white/10">
+
 
                 <button
 
                     onClick={logout}
 
-                    className="flex items-center gap-3 w-full px-5 py-4 rounded-xl bg-red-600 hover:bg-red-700 transition"
+                    className="flex items-center gap-3 w-full px-5 py-4 rounded-xl bg-red-500/10 border border-red-400/20 text-red-400 hover:bg-red-500/20 transition-all duration-300">
 
-                >
 
-                    <FiLogOut/>
+                    <FiLogOut />
 
-                    Logout
+                    <span>
+                        Logout
+                    </span>
+
 
                 </button>
 
+
             </div>
+
 
         </aside>
 
-    );
 
-};
+    )
+
+}
+
 
 export default Sidebar;
