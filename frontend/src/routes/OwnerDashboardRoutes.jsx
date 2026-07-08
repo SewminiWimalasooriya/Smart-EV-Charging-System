@@ -4,7 +4,7 @@ import DashboardLayout from "../pages/owner-dashboard/Layout/DashboardLayout"
 
 
 import SlotManagement from "../pages/owner-dashboard/owner-pages/slots/SlotManagement";
-import BookingManagement from "../pages/owner-dashboard/owner-pages/booking/BookingManagement"; 
+import BookingManagement from "../pages/owner-dashboard/owner-pages/booking/BookingManagement";
 import Overview from "../pages/owner-dashboard/owner-pages/Overview";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -12,32 +12,32 @@ const OwnerDashboardRoutes = () => {
     return (
         <Routes>
 
-    <Route element={<ProtectedRoute allowedRoles={["owner"]} />}>
+            <Route element={<ProtectedRoute allowedRoles={["owner"]} />}>
 
-        <Route
-            path="/owner/:id"
-            element={<DashboardLayout />}
-        >
+                <Route
+                    path="/owner/:id"
+                    element={<DashboardLayout />}
+                >
 
-            <Route index element={<Overview />} />
+                    <Route index element={<Overview />} />
 
-           
 
-            <Route
-                path="slots-management"
-                element={<SlotManagement />}
-            />
 
-            <Route
-                path="booking"
-                element={<BookingManagement />}
-            />
+                    <Route
+                        path="slots-management"
+                        element={<SlotManagement />}
+                    />
 
-        </Route>
+                    <Route
+                        path="booking"
+                        element={<BookingManagement />}
+                    />
 
-    </Route>
+                </Route>
 
-</Routes>
+            </Route>
+
+        </Routes>
 
     )
 }
