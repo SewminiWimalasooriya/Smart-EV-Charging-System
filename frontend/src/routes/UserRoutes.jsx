@@ -7,6 +7,7 @@ import Overview from "../pages/user-dashboard/user-pages/overview/Overview";
 import MyBookings from "../pages/user-dashboard/user-pages/bookings/MyBookings";
 import Notifications from "../pages/user-dashboard/user-pages/notifications/Notifications";
 import ProtectedRoute from "./ProtectedRoute";
+import SlotBooking from "../pages/user-dashboard/user-pages/findSlot/SlotBooking";
 
 
 const UserRoutes = () => {
@@ -19,7 +20,12 @@ const UserRoutes = () => {
                     <Route index element={<Overview />} />
 
                     <Route
-                        path="bookings"
+                        path="slot-booking"
+                        element={<SlotBooking />}
+                    />
+
+                    <Route
+                        path="my-bookings"
                         element={<MyBookings />}
                     />
 

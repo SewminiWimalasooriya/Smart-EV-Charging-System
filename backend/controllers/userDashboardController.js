@@ -38,7 +38,7 @@ export const getUserDashboard = async (req, res) => {
             user: userId,
         })
             .sort({ createdAt: -1 })
-            .limit(5);
+            .limit(50);
 
         
         // Monthly Bookings

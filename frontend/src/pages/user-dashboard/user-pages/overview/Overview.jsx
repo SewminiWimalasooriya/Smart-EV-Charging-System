@@ -25,8 +25,8 @@ import {
 
 
 const STATUS_COLORS = [
-    "#22c55e",
-    "#ef4444",
+    "#63b650",
+    "#d34040",
 ];
 
 
@@ -306,7 +306,7 @@ const UserOverview = () => {
 
                                 dataKey="bookings"
 
-                                fill="#22c55e"
+                                fill="#63b650"
 
                                 radius={[8, 8, 0, 0]}
 

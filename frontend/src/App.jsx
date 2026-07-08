@@ -7,9 +7,16 @@ import StationMap from "./pages/home/StationMap";
 import OwnerDashboardRoutes from "./routes/OwnerDashboardRoutes";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import UserRoutes from "./routes/UserRoutes";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
+    <>
+     {/* Toast Notification Container */}
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
       <Routes>
 
         <Route path="/" element={<Home />} />
@@ -22,7 +29,7 @@ function App() {
         
 
       </Routes>
-
+</>
    
   );
 }

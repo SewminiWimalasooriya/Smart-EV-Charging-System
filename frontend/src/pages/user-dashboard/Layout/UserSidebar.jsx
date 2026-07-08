@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
     FiHome,
     FiMapPin,
@@ -9,18 +10,22 @@ import {
 
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { stationLogout } from "../../auth/StationAUthSlice"; // Change according to your AuthSlice
+
+import { stationLogout } from "../../auth/StationAUthSlice";
+import API from "../../../api";
 
 const UserSidebar = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { apartment } = useSelector(
-        state => state.stationAuth
+    const { apartment, token } = useSelector(
+        (state) => state.stationAuth
     );
 
     const stationId = apartment?._id;
+
+    const [notificationCount, setNotificationCount] = useState(0);
 
     const menus = [
         {
@@ -45,6 +50,63 @@ const UserSidebar = () => {
         }
     ];
 
+    // GET NOTIFICATION COUNT 
+
+    const fetchNotificationCount = async () => {
+
+        try {
+
+            const response = await API.get(
+                "/notification",
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
+            const notifications =
+                response.data.notifications || [];
+
+            const unreadNotifications =
+                notifications.filter(
+                    (item) => item.isRead === false
+                );
+
+            setNotificationCount(
+                unreadNotifications.length
+            );
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+    };
+
+    useEffect(() => {
+
+        if (token) {
+
+            fetchNotificationCount();
+
+            const interval = setInterval(() => {
+
+                fetchNotificationCount();
+
+            }, 30000);
+
+            return () => clearInterval(interval);
+
+        }
+
+    }, [token]);
+
+    // ======================================
+    // LOGOUT
+    // ======================================
+
     const handleLogout = () => {
 
         dispatch(stationLogout());
@@ -66,7 +128,7 @@ const UserSidebar = () => {
 
                 <div className="flex items-center gap-3">
 
-                     <div className=" w-12 h-12 rounded-xl bg-cyan-400/20 flex items-center justify-center text-cyan-400 text-2xl shadow-[0_0_20px_rgba(0,212,255,0.25)]">
+                    <div className="w-12 h-12 rounded-xl bg-cyan-400/20 flex items-center justify-center text-cyan-400 text-2xl shadow-[0_0_20px_rgba(0,212,255,0.25)]">
 
                         <FiZap />
 
@@ -76,7 +138,10 @@ const UserSidebar = () => {
 
                         <h1 className="text-2xl font-bold text-white">
 
-                            Volt<span className="text-cyan-400">Spot</span>
+                            Volt
+                            <span className="text-cyan-400">
+                                Spot
+                            </span>
 
                         </h1>
 
@@ -101,58 +166,151 @@ const UserSidebar = () => {
                     Navigation
 
                 </p>
-
-                {menus.map((menu) => (
+                                {menus.map((menu) => (
 
                     <NavLink
                         key={menu.title}
                         to={menu.path}
                         end={menu.title === "Overview"}
+
                         className={({ isActive }) =>
+
                             `flex items-center gap-4 px-5 py-4 rounded-xl mb-3 transition-all duration-300
-                            
+
                             ${
                                 isActive
                                     ? "bg-cyan-400/20 text-cyan-300 border border-cyan-400/30 shadow-[0_0_20px_rgba(0,212,255,0.15)]"
                                     : "text-slate-300 hover:bg-white/5 hover:text-cyan-300"
                             }`
+
                         }
+
                     >
+
+
+                        {/* Icon */}
+
                         <div className="text-lg">
+
                             {menu.icon}
+
                         </div>
 
-                        <span className="font-medium">
-                            {menu.title}
-                        </span>
+
+
+
+
+                        {/* Menu title + Notification badge */}
+
+                        <div className="flex items-center justify-between flex-1">
+
+
+                            <span className="font-medium">
+
+                                {menu.title}
+
+                            </span>
+
+
+
+
+
+                            {
+                                menu.title === "Notifications" &&
+                                notificationCount > 0 && (
+
+                                    <span
+                                        className="
+                                            min-w-[22px]
+                                            h-[22px]
+                                            px-2
+                                            rounded-full
+                                            bg-cyan-500
+                                            text-white
+                                            text-xs
+                                            font-bold
+                                            flex
+                                            items-center
+                                            justify-center
+                                            shadow-lg
+                                        "
+                                    >
+
+                                        {
+                                            notificationCount > 99
+                                                ? "99+"
+                                                : notificationCount
+                                        }
+
+                                    </span>
+
+                                )
+                            }
+
+
+                        </div>
+
+
 
                     </NavLink>
 
                 ))}
 
+
             </div>
+
+
+
+
 
             {/* Logout */}
 
             <div className="p-5 border-t border-white/10">
 
+
                 <button
+
                     onClick={handleLogout}
-                    className="flex items-center gap-3 w-full px-5 py-4 rounded-xl bg-red-500/10 border border-red-400/20 text-red-400 hover:bg-red-500/20 transition-all duration-300"
+
+                    className="
+                        flex
+                        items-center
+                        gap-3
+                        w-full
+                        px-5
+                        py-4
+                        rounded-xl
+                        bg-red-500/10
+                        border
+                        border-red-400/20
+                        text-red-400
+                        hover:bg-red-500/20
+                        transition-all
+                        duration-300
+                    "
+
                 >
 
                     <FiLogOut />
 
-                    <span>Logout</span>
+                    <span>
+
+                        Logout
+
+                    </span>
+
 
                 </button>
 
+
             </div>
+
 
         </aside>
 
     );
 
 };
+
 
 export default UserSidebar;
