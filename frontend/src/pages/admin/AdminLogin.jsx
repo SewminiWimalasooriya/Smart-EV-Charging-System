@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { adminLoginSuccess } from "../auth/AdminAuthSlice";
 
 const AdminLogin = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -33,17 +36,22 @@ const AdminLogin = () => {
             })
 
             const data = await response.json();
-            const token = data.token;
             if (response.ok) {
-                localStorage.setItem("adminToken", token);
-                alert(data.message);
-                navigate("/admin/dashboard");
+
+                dispatch(
+                    adminLoginSuccess({
+                        token: data.token,
+                        user: data.user
+                    })
+                );
+                navigate("/admin/admin-dashboard");
+
                 setFormData({
                     email: "",
                     password: "",
-                })
+                });
 
-            }else {
+            } else {
                 alert(data.message);
                 return;
             }

@@ -12,6 +12,7 @@ import bookingRoutes from './routes/bookingRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
 import ownerDashboardRoutes from './routes/ownerDashboardRoutes.js';
 import userDashboardRoutes from './routes/userDashboardRoutes.js';
+import adminDashboardRoutes from './routes/adminDashboardRoutes.js';
 
 dotenv.config();
 
@@ -42,6 +43,8 @@ app.use('/api/notification',notificationRoutes);
 
 //admin routes
 app.use('/api/auth/admin',adminAuthRoutes);
+//admin dashboard routes
+app.use('/api/admin/dashboard',adminDashboardRoutes);
 
 //owner dashboard routes
 app.use("/api/owner/dashboard", ownerDashboardRoutes);
