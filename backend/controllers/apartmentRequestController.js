@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import User from "../models/User.js";
 import fs from "fs";
+import sendEmail from "../utils/sendEmail.js"
 
 //create station request form 
 export const createApartmentRequest = async (req, res) => {
@@ -124,9 +125,40 @@ export const approveRequest = async (req, res) => {
         });
 
         // 5️⃣ TODO: send email (you can plug nodemailer here)
-        console.log("Owner Login Details:");
-        console.log("Email:", owner.email);
-        console.log("Password:", tempPassword);
+        await sendEmail({
+
+    email: owner.email,
+
+    subject:"VoltSpot Owner Account Created",
+
+    message:`
+
+       <h2>Welcome ${owner.username} ⚡</h2>
+
+<p>
+Your EV station request has been approved.
+</p>
+
+<p>
+Login Email:
+${owner.email}
+</p>
+
+
+<p>
+Temporary Password:
+<b>${tempPassword}</b>
+</p>
+
+
+<p>
+Please change your password after login.
+</p>
+
+
+`
+
+});
 
         request.status = "APPROVED";
         await request.save();
