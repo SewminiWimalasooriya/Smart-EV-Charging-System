@@ -11,8 +11,12 @@ import {
     FiActivity,
     FiTrendingUp,
     FiArrowUpRight,
-    FiCheckCircle
+    FiCheckCircle,
+
 } from "react-icons/fi";
+
+import { FaFileSignature } from "react-icons/fa6";
+import { GoXCircleFill } from "react-icons/go";
 
 import {
     ResponsiveContainer,
@@ -57,6 +61,7 @@ const AdminOverview = () => {
             );
 
             setData(res.data);
+            console.log(res.data);
 
         }
 
@@ -90,16 +95,37 @@ const AdminOverview = () => {
 
         return (
 
+
             <div className="
+                        flex
+                        justify-center
+                        items-center
+                        
+                    ">
+
+                <div className="
+                            w-12
+                            h-12
+                            rounded-full
+                            border-b-2
+                            border-green-400
+                            animate-spin
+                        ">
+
+                </div>
+                <div className="
                 flex
                 justify-center
                 items-center
                 h-screen
                 text-cyan-400
                 text-xl
+                
             ">
 
-                Loading Dashboard...
+
+
+                </div>
 
             </div>
 
@@ -153,6 +179,18 @@ const AdminOverview = () => {
             value: overview.todayBookings || 0,
             icon: <FiCalendar />,
             color: "orange"
+        },
+        {
+            title: "Total Bookings",
+            value: overview.totalBookings || 0,
+            icon: <FaFileSignature />,
+            color: "blue"
+        },
+        {
+            title: "Cancle Bookings",
+            value: overview.cancelledBookings || 0,
+            icon: <GoXCircleFill />,
+            color: "orange"
         }
 
     ];
@@ -195,7 +233,7 @@ const AdminOverview = () => {
                         gap-3
                     ">
 
-                        <FiActivity className="text-green-400"/>
+                        <FiActivity className="text-green-400" />
 
                         <div>
 
@@ -247,8 +285,8 @@ const AdminOverview = () => {
             <div className="
                 grid
                 grid-cols-1
-                md:grid-cols-2
-                xl:grid-cols-3
+                md:grid-cols-3
+                xl:grid-cols-4
                 gap-6
             ">
 
@@ -306,7 +344,7 @@ const AdminOverview = () => {
 
                         <div className="mt-6 flex items-center gap-2 text-green-400 text-sm">
 
-                            <FiArrowUpRight/>
+                            <FiArrowUpRight />
 
                             Live Statistics
 
@@ -317,7 +355,7 @@ const AdminOverview = () => {
                 ))}
 
             </div>
-             
+
             {/* Summary Section */}
 
 
@@ -511,7 +549,7 @@ const AdminOverview = () => {
                         ">
 
 
-                            <FiActivity/>
+                            <FiActivity />
 
 
                         </div>
@@ -609,7 +647,7 @@ const AdminOverview = () => {
 
 
             </div>
-            
+
             {/* Recent Activity Section */}
 
             <div className="
@@ -672,7 +710,7 @@ const AdminOverview = () => {
                         {
                             data?.recentRequests?.length > 0 ? (
 
-                                data.recentRequests.map((request)=>(
+                                data.recentRequests.map((request) => (
 
 
                                     <div
@@ -832,17 +870,17 @@ const AdminOverview = () => {
                     <div className="space-y-4">
 
 
-                    {
+                        {
 
-                        data?.recentBookings?.length > 0 ? (
-
-
-                            data.recentBookings.map((booking)=>(
+                            data?.recentBookings?.length > 0 ? (
 
 
-                                <div
-                                    key={booking._id}
-                                    className="
+                                data.recentBookings.map((booking) => (
+
+
+                                    <div
+                                        key={booking._id}
+                                        className="
                                         bg-[#07111F]
                                         rounded-2xl
                                         p-4
@@ -850,47 +888,47 @@ const AdminOverview = () => {
                                         justify-between
                                         items-center
                                     "
-                                >
+                                    >
 
 
-                                    <div>
+                                        <div>
 
 
-                                        <h3 className="
+                                            <h3 className="
                                             text-white
                                             font-medium
                                         ">
 
 
-                                            {
-                                                booking.user?.username ||
-                                                "User"
-                                            }
+                                                {
+                                                    booking.user?.username ||
+                                                    "User"
+                                                }
 
 
-                                        </h3>
+                                            </h3>
 
 
-                                        <p className="
+                                            <p className="
                                             text-slate-400
                                             text-sm
                                         ">
 
 
-                                            {
-                                                booking.station?.name ||
-                                                "Station"
-                                            }
+                                                {
+                                                    booking.station?.name ||
+                                                    "Station"
+                                                }
 
 
-                                        </p>
+                                            </p>
 
 
-                                    </div>
+                                        </div>
 
 
 
-                                    <span className="
+                                        <span className="
                                         text-green-400
                                         text-sm
                                         px-3
@@ -900,35 +938,35 @@ const AdminOverview = () => {
                                     ">
 
 
-                                        {booking.status}
+                                            {booking.status}
 
 
-                                    </span>
-
-
-
-                                </div>
+                                        </span>
 
 
 
-                            ))
+                                    </div>
 
 
-                        ) : (
+
+                                ))
 
 
-                            <p className="
+                            ) : (
+
+
+                                <p className="
                                 text-slate-400
                             ">
 
-                                No bookings yet
+                                    No bookings yet
 
-                            </p>
+                                </p>
 
 
-                        )
+                            )
 
-                    }
+                        }
 
 
                     </div>
