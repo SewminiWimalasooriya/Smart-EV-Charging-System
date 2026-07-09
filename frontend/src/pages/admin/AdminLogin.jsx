@@ -153,7 +153,7 @@ const AdminLogin = () => {
                     {/* Login Button */}
                     <button
                         type="submit"
-                        className="mt-4 bg-white text-black py-4 rounded-xl font-semibold hover:bg-gray-200 transition duration-300"
+                        className="mt-4 bg-blue-400 text-black py-4 rounded-xl font-semibold hover:bg-gray-200 transition duration-300"
                     >
                         Login
                     </button>

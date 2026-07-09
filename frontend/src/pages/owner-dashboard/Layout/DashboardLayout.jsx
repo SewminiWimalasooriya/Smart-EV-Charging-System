@@ -10,13 +10,13 @@ const DashboardLayout = () => {
             <Sidebar />
 
             {/* Right Side */}
-            <div className="flex flex-col flex-1 overflow-hidden">
+            <div className="flex flex-col flex-1 overflow-hidden ">
 
                 
                 {/* <DashboardNavbar /> */}
 
                 {/* Pages */}
-                <main className="flex-1 overflow-y-auto bg-slate-900 p-8">
+                <main className="flex-1 overflow-y-auto bg-slate-900 p-4">
                     <Outlet />
                 </main>
 

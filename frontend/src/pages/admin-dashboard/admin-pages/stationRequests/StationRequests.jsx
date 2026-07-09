@@ -23,6 +23,7 @@ const StationRequests = () => {
     const [requests, setRequests] = useState([]);
     const [search, setSearch] = useState("");
     const [processingId, setProcessingId] = useState(null);
+    const [processingAction, setProcessingAction] = useState("");
 
     // ===========================
     // GET PENDING REQUESTS
@@ -73,6 +74,7 @@ const StationRequests = () => {
         try {
 
             setProcessingId(id);
+            setProcessingAction("approve");
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -99,6 +101,8 @@ const StationRequests = () => {
 
         finally {
             setProcessingId(null);
+            setProcessingAction("");
+
         }
 
     };
@@ -109,6 +113,7 @@ const StationRequests = () => {
 
         try {
             setProcessingId(id);
+            setProcessingAction("reject");
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -134,6 +139,7 @@ const StationRequests = () => {
         }
         finally {
             setProcessingId(null);
+            setProcessingAction("");
         }
     };
 
@@ -493,10 +499,9 @@ const StationRequests = () => {
 
                                             {
 
-                                                processingId === item._id
-
+                                               processingId === item._id &&
+                                                processingAction === "approve"
                                                     ? "Approving..."
-
                                                     : "Approve"
 
                                             }
@@ -527,10 +532,9 @@ const StationRequests = () => {
 
                                             {
 
-                                                processingId === item._id
-
+                                                processingId === item._id &&
+                                                processingAction === "reject"
                                                     ? "Rejecting..."
-
                                                     : "Reject"
 
                                             }
