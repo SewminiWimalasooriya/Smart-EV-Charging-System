@@ -172,14 +172,14 @@ const Overview = () => {
                 <div className="flex flex-col items-center gap-4 ">
 
                     <div className="
-w-12
-h-12
-border-4
-border-cyan-400
-border-t-transparent
-rounded-full
-animate-spin
-"></div>
+                        w-12
+                        h-12
+                        border-4
+                        border-cyan-400
+                        border-t-transparent
+                        rounded-full
+                        animate-spin
+                        "></div>
 
 
                     <p className="text-slate-400">
@@ -196,68 +196,68 @@ animate-spin
     return (
 
         <div className="
-min-h-screen
-space-y-8
-bg-[#07111F]
-text-white
-p-2
-">
+            min-h-screen
+            space-y-8
+            bg-[#07111F]
+            text-white
+            p-2
+            ">
 
             <div className="
-relative
-overflow-hidden
-rounded-3xl
-p-4
-bg-gradient-to-br
-from-[#0F1B2D]
-via-[#102A43]
-to-[#006778]
-border
-border-cyan-400/20
-shadow-[0_0_40px_rgba(0,212,255,0.15)]
-">
+                relative
+                overflow-hidden
+                rounded-3xl
+                p-4
+                bg-gradient-to-br
+                from-[#0F1B2D]
+                via-[#102A43]
+                to-[#006778]
+                border
+                border-cyan-400/20
+                shadow-[0_0_40px_rgba(0,212,255,0.15)]
+                ">
 
                 <div className="
-absolute
-w-40
-h-40
-bg-cyan-400
-rounded-full
-blur-3xl
-opacity-20
-top-[-40px]
-right-[-40px]
-"></div>
+                    absolute
+                    w-40
+                    h-40
+                    bg-cyan-400
+                    rounded-full
+                    blur-3xl
+                    opacity-20
+                    top-[-40px]
+                    right-[-40px]
+                    "></div>
 
 
                 <div className="
-relative
-z-10
-flex
-justify-between
-items-center
-">
+                        relative
+                        z-10
+                        flex
+                        justify-between
+                        items-center
+                        ">
 
 
                     <div>
 
                         <div className="
-flex
-items-center
-gap-4
-">
+                            flex
+                            items-center
+                            gap-4
+                            ">
 
 
                             <div className="
-w-14
-h-14
-rounded-2xl
-bg-cyan-400/20
-flex
-items-center
-justify-center
-text-3xl
-">
+                                w-14
+                                h-14
+                                rounded-2xl
+                                bg-cyan-400/20
+                                flex
+                                items-center
+                                justify-center
+                                text-3xl
+                                ">
                                 ⚡
                             </div>
 
@@ -265,20 +265,20 @@ text-3xl
                             <div>
 
                                 <h1 className="
-text-3xl
-font-bold
-text-white
-">
+                                    text-3xl
+                                    font-bold
+                                    text-white
+                                    ">
 
-                                    Welcome back, {user?.username?.toUpperCase()}
+                                    Welcome back, {user?.username?.toUpperCase()} to {apartment?.name.toUpperCase()}
 
                                 </h1>
 
 
                                 <p className="
-text-cyan-100
-mt-2
-">
+                                        text-cyan-100
+                                        mt-2
+                                        ">
 
                                     Monitor and manage your EV charging station efficiently
 
@@ -292,34 +292,34 @@ mt-2
 
 
                         <div className="
-mt-6
-flex
-gap-3
-flex-wrap
-">
+                                mt-6
+                                flex
+                                gap-3
+                                flex-wrap
+                                ">
 
 
                             <div className="
-flex
-items-center
-gap-2
-bg-green-500/10
-border
-border-green-400/30
-text-green-300
-px-5
-py-2
-rounded-full
-text-sm
-">
+                                flex
+                                items-center
+                                gap-2
+                                bg-green-500/10
+                                border
+                                border-green-400/30
+                                text-green-300
+                                px-5
+                                py-2
+                                rounded-full
+                                text-sm
+                                ">
 
                                 <span className="
-w-3
-h-3
-bg-green-400
-rounded-full
-animate-pulse
-"></span>
+                                    w-3
+                                    h-3
+                                    bg-green-400
+                                    rounded-full
+                                    animate-pulse
+                                    "></span>
 
                                 Station Online
 
@@ -328,14 +328,14 @@ animate-pulse
 
 
                             <div className="
-bg-white/10
-border
-border-white/10
-px-5
-py-2
-rounded-full
-text-sm
-">
+                                    bg-white/10
+                                    border
+                                    border-white/10
+                                    px-5
+                                    py-2
+                                    rounded-full
+                                    text-sm
+                                    ">
 
                                 ⚡ Smart Charging Enabled
 

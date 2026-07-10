@@ -7,9 +7,9 @@ import {
     FiCheckCircle,
     FiXCircle,
     FiBell,
-    FiZap
+    FiZap,
+    FiMapPin,
 } from "react-icons/fi";
-
 
 import {
     BarChart,
@@ -42,6 +42,10 @@ const UserOverview = () => {
         state => state.stationAuth
     );
 
+    const { apartment } = useSelector(
+        state => state.stationAuth
+    );
+
     const token = localStorage.getItem("token");
 
 
@@ -64,8 +68,7 @@ const UserOverview = () => {
 
 
                 setData(res.data);
-               
-
+        
 
             } catch (error) {
 
@@ -165,6 +168,12 @@ const UserOverview = () => {
                     Welcome back {user?.username?.toUpperCase()} , 👋 
 
                 </h1>
+
+                <p className="text-cyan-500 mt-2 flex p-1 ">
+
+                    <FiMapPin size={20} /> {apartment?.name?.toUpperCase()}
+
+                </p>
 
                 <p className="text-slate-400 mt-2">
 

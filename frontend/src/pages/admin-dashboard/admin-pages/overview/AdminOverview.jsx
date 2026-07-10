@@ -138,61 +138,62 @@ const AdminOverview = () => {
     const chartData = data?.bookingChart || [];
 
     const stats = [
-
         {
             title: "Total Stations",
             value: overview.totalStations || 0,
             icon: <FiMapPin />,
-            color: "cyan"
+            bg: "bg-cyan-500/20",
+            text: "text-cyan-400",
         },
-
         {
             title: "Active Stations",
             value: overview.activeStations || 0,
             icon: <FiZap />,
-            color: "green"
+            bg: "bg-green-500/20",
+            text: "text-green-400",
         },
-
         {
             title: "Pending Requests",
             value: overview.pendingRequests || 0,
             icon: <FiClock />,
-            color: "yellow"
+            bg: "bg-yellow-500/20",
+            text: "text-yellow-400",
         },
-
         {
             title: "Total Users",
             value: overview.totalUsers || 0,
             icon: <FiUsers />,
-            color: "purple"
+            bg: "bg-purple-500/20",
+            text: "text-purple-400",
         },
-
         {
             title: "Blocked Stations",
             value: overview.blockedStations || 0,
             icon: <FiShield />,
-            color: "red"
+            bg: "bg-red-500/20",
+            text: "text-red-400",
         },
-
         {
             title: "Today's Bookings",
             value: overview.todayBookings || 0,
             icon: <FiCalendar />,
-            color: "orange"
+            bg: "bg-orange-500/20",
+            text: "text-orange-400",
         },
         {
             title: "Total Bookings",
             value: overview.totalBookings || 0,
             icon: <FaFileSignature />,
-            color: "blue"
+            bg: "bg-blue-500/20",
+            text: "text-blue-400",
         },
         {
-            title: "Cancle Bookings",
+            title: "Cancelled Bookings",
             value: overview.cancelledBookings || 0,
             icon: <GoXCircleFill />,
-            color: "orange"
-        }
-
+            bg: "bg-rose-500/20",
+            text: "text-rose-400",
+        },
     ];
 
     return (
@@ -294,16 +295,18 @@ const AdminOverview = () => {
 
                     <div
                         key={item.title}
-                        className="
-                            bg-[#0F1B2D]
-                            rounded-3xl
-                            border
-                            border-white/10
-                            p-6
-                            hover:border-cyan-400/40
-                            transition
-                            duration-300
-                        "
+                        className={`
+                                bg-[#0F1B2D]
+                                rounded-3xl
+                                border
+                                border-white/10
+                                p-6
+                                transition-all
+                                duration-300
+                                hover:scale-105
+                                hover:shadow-xl
+                                ${item.text.replace("text", "hover:border")}
+                            `}
                     >
 
                         <div className="flex justify-between">
@@ -324,17 +327,8 @@ const AdminOverview = () => {
 
                             </div>
 
-                            <div className="
-                                w-14
-                                h-14
-                                rounded-2xl
-                                bg-cyan-400/20
-                                flex
-                                items-center
-                                justify-center
-                                text-cyan-400
-                                text-2xl
-                            ">
+                            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl ${item.bg} ${item.text}`}>
+
 
                                 {item.icon}
 
@@ -371,9 +365,9 @@ const AdminOverview = () => {
 
 
                 <div className="
-                    bg-[#0F1B2D]
+                    bg-cyan-400/20
                     border
-                    border-white/10
+                    border-cyan-400/10
                     rounded-3xl
                     p-6
                 ">
@@ -481,9 +475,9 @@ const AdminOverview = () => {
 
 
                 <div className="
-                    bg-[#0F1B2D]
+                     bg-green-400/20
                     border
-                    border-white/10
+                    border-green-200/10
                     rounded-3xl
                     p-6
                 ">
@@ -569,9 +563,9 @@ const AdminOverview = () => {
 
 
                 <div className="
-                    bg-[#0F1B2D]
+                    bg-orange-400/20
                     border
-                    border-white/10
+                    border-orange-400/10
                     rounded-3xl
                     p-6
                 ">
